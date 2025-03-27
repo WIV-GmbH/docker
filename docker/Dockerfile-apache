@@ -1,0 +1,21 @@
+# Use an official PHP image with Apache
+FROM webdevops/php-apache-dev:8.1
+
+# Enable mod_rewrite for Kirby CMS
+RUN a2enmod rewrite
+
+RUN apt-get update && apt-get install -y git
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy build files from Webpack Container 
+COPY . .
+
+RUN chown -R application:application /app/
+
+# Copy the Apache virtual host configuration file into the container
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# Expose port 80 (default HTTP port)
+EXPOSE 80
