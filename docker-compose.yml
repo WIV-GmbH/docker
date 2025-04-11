@@ -1,7 +1,7 @@
 services:
   web:
     build:
-      context: .
+      context: ..
       dockerfile: docker/Dockerfile-apache
     container_name: kirby-web
     ports:
@@ -9,7 +9,7 @@ services:
     environment:
       - APP_ENV=${APP_ENV:-production}
     volumes:
-      - ./:/app
+      - ../:/app
     networks:
       - kirby_network
 
