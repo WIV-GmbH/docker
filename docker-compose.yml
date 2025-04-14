@@ -7,7 +7,7 @@ services:
     ports:
       - "80:80"
     environment:
-      - APP_ENV=${APP_ENV:-production}
+      - APP_ENV=${APP_ENV:-development}
     volumes:
       - ../:/app
     networks:
