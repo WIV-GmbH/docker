@@ -6,8 +6,8 @@ services:
     container_name: kirby-web
     ports:
       - "80:80"
-    environment:
-      - APP_ENV=${APP_ENV:-development}
+    # environment:
+    #   - APP_ENV=${APP_ENV:-development}
     volumes:
       - ../:/app
     networks:
