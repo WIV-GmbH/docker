@@ -14,5 +14,24 @@ COPY --chown=application:application ../ .
 # Copy the Apache virtual host configuration file into the container
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
+# msmtp installieren (als Sendmail-Ersatz)
+RUN apt-get update && \
+    apt-get install -y msmtp && \
+    ln -sf /usr/bin/msmtp /usr/sbin/sendmail
+
+# msmtp konfigurieren (Mail an MailHog senden)
+RUN echo "defaults" > /etc/msmtprc && \
+    echo "auth           off" >> /etc/msmtprc && \
+    echo "tls            off" >> /etc/msmtprc && \
+    echo "logfile        /var/log/msmtp.log" >> /etc/msmtprc && \
+    echo "" >> /etc/msmtprc && \
+    echo "account        default" >> /etc/msmtprc && \
+    echo "host           mailhog" >> /etc/msmtprc && \
+    echo "port           1025" >> /etc/msmtprc && \
+    chmod 600 /etc/msmtprc
+
+# sendmail_path in der php.ini setzen
+RUN echo "sendmail_path = /usr/sbin/sendmail -t -i" >> /opt/docker/etc/php/php.ini
+
 # Expose port 80 (default HTTP port)
 EXPOSE 80
