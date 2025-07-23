@@ -1,5 +1,5 @@
 # Use an official PHP image with Apache
-FROM webdevops/php-apache-dev:8.1
+FROM webdevops/php-apache-dev:8.3
 
 # Enable mod_rewrite for Kirby CMS
 RUN a2enmod rewrite
